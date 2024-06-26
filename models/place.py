@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, ForeignKey, Integer, Float
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
-from models import storage_type, storage
+from models import storage
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -17,7 +17,7 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)  
     longitude = Column(Float, nullable=True)
     
-    if storage_type == 'db':
+    if storage.HBNB_TYPE_STORAGE == 'db':
         reviews = relationship("Review", backref="place", cascade="all, delete, delete-orphan")
     else:
         @property
