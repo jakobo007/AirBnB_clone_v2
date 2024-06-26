@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """This module handles the storage of HBNB objects"""
-from models import storage
+from models.engine import storage
 from os import getenv
 
 HBNB_TYPE_STORAGE = getenv('HBNB_TYPE_STORAGE')
