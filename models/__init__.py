@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """This module handles the storage of HBNB objects"""
 
-# models/__init__.py
 from os import getenv
 
 storage_type = getenv('HBNB_TYPE_STORAGE')
@@ -13,4 +12,3 @@ else:
     storage = FileStorage()
 
 storage.reload()
-
