@@ -1,5 +1,7 @@
 from sqlalchemy import Column, String, ForeignKey, Integer, Float
+from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
+from models import storage_type, storage
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -13,10 +15,20 @@ class Place(BaseModel, Base):
     max_guest = Column(Integer, nullable=False, default=0)
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float, nullable=True)  
-    longitude = Column(Float, nullable=True)  
+    longitude = Column(Float, nullable=True)
+    
+    if storage_type == 'db':
+        reviews = relationship("Review", backref="place", cascade="all, delete, delete-orphan")
+    else:
+        @property
+        def reviews(self):
+            """Returns the list of Review instances with place_id equal to current Place.id"""
+            from models.review import Review
+            all_reviews = storage.all(Review)
+            place_reviews = [review for review in all_reviews.values() if review.place_id == self.id]
+            return place_reviews
+
     amenity_ids = []  
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-
