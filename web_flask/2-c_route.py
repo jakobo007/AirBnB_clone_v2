@@ -18,7 +18,7 @@ def hbnb():
     return "HBHB"
 
 
-app.route("/c/<text>", strict_slashes=False)
+@app.route("/c/<text>", strict_slashes=False)
 def c_text(text):
     """Returns given string"""
     return "C {}".format(text.replace("_", " "))
