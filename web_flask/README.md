@@ -1,0 +1,1 @@
+This is a web_flask directory for AirBnB clone project
