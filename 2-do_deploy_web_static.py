@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from fabric.api import env, put, run
 import os
 
