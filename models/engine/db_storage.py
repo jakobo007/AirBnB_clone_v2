@@ -13,7 +13,6 @@ from models.review import Review
 from models.user import User
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-
 name2class = {
     'Amenity': Amenity,
     'City': City,
@@ -22,6 +21,7 @@ name2class = {
     'Review': Review,
     'User': User
 }
+
 
 class DBStorage:
     """Database Storage"""
@@ -35,7 +35,7 @@ class DBStorage:
         host = os.getenv('HBNB_MYSQL_HOST')
         database = os.getenv('HBNB_MYSQL_DB')
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                      .format(user, passwd, host, database), pool_pre_ping=True)
+                                      .format(user, passwd, host, database))
         if os.getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
