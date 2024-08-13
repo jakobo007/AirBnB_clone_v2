@@ -1,31 +1,23 @@
 #!/usr/bin/env bash
 # setup web servers to deploy web static
 sudo apt-get update
-sudo apt-get install nginx -y
+sudo apt-get -y install nginx
 sudo ufw allow 'Nginx HTTP'
-
-# make directories
+sudo mkdir -p /data/
+sudo mkdir -p /data/web_static/
+sudo mkdir -p /data/web_static/releases/
+sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
-sudo mkdir -p /data/web_static/shared
-
-# create index file
+sudo touch /data/web_static/releases/test/index.html
 sudo echo "<html>
 <head>
 <body>
 Holberton School
 </body>
 </head>
-</html>" | sudo tee /data/web_static/releases/index.html
-
-# create symbolic link
-sudo ln -s -f /data/web_static/releases/test/ /data/web_static/current
-
-# give ownership of /data/ to ubuntu
+</html>" | sudo tee /data/web_static/releases/test/index.html
+sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data/
-sudo chmod -R 755 /data/
-
-# Update Nginx configuration to serve the content of /data/web_static/current/ to hbnb_static
 sudo sed -i '/server_name _;/a \ \n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}' /etc/nginx/sites-available/default
-
-# Restart Nginx to apply the changes
 sudo service nginx restart
+
