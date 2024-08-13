@@ -3,8 +3,8 @@
 from fabric.api import env, put, run
 import os
 
-
 env.hosts = ['100.26.227.224', '34.227.92.200']
+
 
 def do_deploy(archive_path):
     """Deploys archive to server"""
@@ -22,7 +22,7 @@ def do_deploy(archive_path):
 
         """Uncompress the archive"""
         run("sudo mkdir -p {}".format(release_dir))
-        run("sudo tar -xzf /tmp/{} -C {}".format(file_name,release_dir))
+        run("sudo tar -xzf /tmp/{} -C {}".format(file_name, release_dir))
 
         """remove archive"""
         run("sudo rm /tmp/{}".format(file_name))
