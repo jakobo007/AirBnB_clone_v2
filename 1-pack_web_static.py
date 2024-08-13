@@ -1,19 +1,25 @@
 #!/usr/bin/python3
-"""Imported modules"""
+"""Imported Modules"""
 from fabric.api import local
-from time import strftime
-from datetime import date
+from datetime import datetime
+import os
 
 
 def do_pack():
-    """generates .tgz archive"""
-    filename = strftime("%Y%m%d%H%M%S")
-    try:
-        local("mkdir -p versions")
-        local("tar -czvf versions/web_static_{}.tgz web_static/"
-              .format(filename))
+    """Generates a tgz archive for web_static"""
+    if not os.path.exists("versions"):
+        os.makedirs("versions")
 
-        return "versions/web_static_{}.tgz".format(filename)
+    """generate archive name with date and time"""
+    now = datetime.now()
+    archive_name = "web_static_{}.tgz".format(now.strftime("%Y%m%d%H%M%S"))
+    archive_path = "versions/{}".format(archive_name)
 
-    except Exception as e:
+    """create archive"""
+    result = local("tar -cvzf {} web_static".format(archive_path))
+
+    if result.succeeded:
+        return archive_path
+    else:
         return None
+    
