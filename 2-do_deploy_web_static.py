@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Compress web static package
 """
-from fabric.api import *
+from fabric.api import run, put, env
 from datetime import datetime
 from os import path
 
@@ -54,4 +54,3 @@ web_static_{}/ /data/web_static/current'.format(timestamp))
 
         # return True on success
         return True
-
